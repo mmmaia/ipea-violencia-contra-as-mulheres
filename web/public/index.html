@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>Visualização: IPEA - Tolerância social à violência contra as mulheres</title>
+  <meta name="twitter:site" content="@mauricio">
+  <meta property="og:site_name" content="São Paulo I/O" />
+  <meta name="twitter:url" content="http://www.saopaulo.io/" />
+  <meta property="og:url" content="http://www.saopaulo.io/">
+  <meta name="twitter:title" content="Visualização: IPEA - Tolerância social à violência contra as mulheres" />
+  <meta property="og:title" content="Visualização: IPEA - Tolerância social à violência contra as mulheres" />
+  <meta name="twitter:description" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:image" content="http://www.saopaulo.io/images/posts/ipea-violencia-contra-mulheres.png" />
+  <meta property="og:image" content="http://www.saopaulo.io/images/posts/ipea-violencia-contra-mulheres.png" />
+  <meta name="twitter:image:width" content="502">
+  <meta name="twitter:image:height" content="1155">
+  <meta property="og:image:width" content="502">
+  <meta property="og:image:height" content="1155">
+  <meta property="og:type" content="website" />
+	<meta name="description" content="Visualização dos microdados da pesquisa “Tolerância social à violência contra as mulheres” do IPEA">
+	<meta name="author" content="São Paulo I/O">
+	<base href="http://www.saopaulo.io/interativos/ipea-violencia-contra-mulher/">
+
+
+	<link href="css/buttons.css" rel="stylesheet" type="text/css">
+
+	<style>
+		html, body {
+			color: #333;
+			font-family: "Helvetica Neue", Arial, sans-serif;
+		}
+		.container {
+			width: 1000px;
+			margin: auto;
+			padding: 0 0 20px 0;
+			text-align: center;
+			background-color: #f7f7f7;
+			background-image: url('images/bg.png');
+		}
+		table {
+			width: 50%;
+			border-spacing: 0;
+			margin-bottom: 15px;
+		}
+		td {
+			padding: 0;
+			height: 20px;
+			vertical-align: middle;
+		}
+		h2 {
+			font-size: 20px;
+			background-color: #f7f7f7;
+		}
+		h2 small {
+			font-size: 80%;
+			font-weight: lighter;
+			color: #777;
+		}
+		.label {
+			float:left;
+			margin-left: 10px;
+			margin-top: -35px;
+			font-size: 90%;
+		}
+		.index {
+			color: #000;
+			font-size: 10px;
+			display: none;
+		}
+		.axis-label {
+			width: 1000px;
+			margin-bottom: 40px;
+			padding: 20px 0 20px 0;
+			font-size: 14px;
+			text-align:left;
+			color: #777;
+			background-color: #f7f7f7;
+			background-image: url('images/bg.png');
+		}
+		.discorda { background-color: #de2d26; }
+		.discorda-parcial { background-color: #fc9272; border-right: 1px solid #000;}
+		.neutro { background-color: #eee; }
+		.concorda-parcial { background-color: #a1d99b; }
+		.concorda { background-color: #31a354; }
+		header,
+		footer {
+			width: 1000px;
+			margin: auto;
+			padding: 0 10px 30px; 10px;
+		}
+		footer {
+			margin-top: 30px;
+			text-align: center;
+		}
+		a {
+			color: #428bca;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		.nav {
+			text-align: center;
+			margin-top: 30px;
+		}
+		.nav .home {
+			font-weight: bold;
+		}
+		.legend {
+			text-align: center;
+			margin: 30px auto 0 auto;
+		}
+		.square {
+			width: 15px;
+			height: 15px;
+			margin-left: 15px;
+			border: 0;
+			display: inline-block;
+		}
+		.square:first-child {
+			margin-left: 0;
+		}
+		.cc_icons:hover {
+			text-decoration: none;
+		}
+		.addthis_toolbox {
+			margin: 20px auto 40px auto;
+			width: 180px;
+		}
+	</style>
+
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+		$(function() {
+			$(document).scroll(function(){
+				if ($(this).scrollTop() > 255) {
+					$('#axis').css('position', 'fixed');
+					$('#axis').css('top', '0');
+					$('#axis').css('background-color', 'rgba(247,247,247,.9)');
+				}
+				else {
+					$('#axis').css('position', 'relative');
+					$('#axis').css('top', '');
+					$('#axis').css('background-color', 'rgba(247,247,247,1)');
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+<header>
+	<h1>IPEA - Tolerância social à violência contra as mulheres</h1>
+	<p>
+	Esta visualização exibe as respostas da pesquisa <em>“Tolerância social à violência contra as mulheres”</em> do IPEA, segundo os microdados divulgados pelo instituto.
+	<strong>Não</strong> são considerados modelos adicionais elaborados pela pesquisa...
+	<a href="http://www.saopaulo.io/visualizando-os-microdados-da-pesquisa-ipea-de-tolerancia-social-a-violencia-contra-as-mulheres/">saiba mais</a>
+	</p>
+
+	<div class="nav">
+		<a href="/index.html" class="btn btn-default btn-sm home active">Total</a>
+		<a href="/regiao.html" class="btn btn-default btn-sm ">Região</a>
+		<a href="/idade.html" class="btn btn-default btn-sm ">Idade</a>
+		<a href="/area.html" class="btn btn-default btn-sm ">Area</a>
+		<a href="/sexo.html" class="btn btn-default btn-sm ">Sexo</a>
+		<a href="/cor.html" class="btn btn-default btn-sm ">Cor</a>
+	</div>
+
+	<div class="legend">
+		<span class="square discorda"></span> discorda totalmente
+		<span class="square discorda-parcial"></span> discorda parcialmente
+		<span class="square concorda-parcial"></span> concorda parcialmente
+		<span class="square concorda"></span> concorda totalmente
+	</div>
+</header>
+
+<div class="container">
+	<div id="axis" class="axis-label">
+		<span style="margin-left:93px;">80%</span>
+		<span style="margin-left:66px;">60%</span>
+		<span style="margin-left:66px;">40%</span>
+		<span style="margin-left:66px;">20%</span>
+		<span style="margin-left:166px;">20%</span>
+		<span style="margin-left:65px;">40%</span>
+		<span style="margin-left:67px;">60%</span>
+		<span style="margin-left:66px;">80%</span>
+	</div>
+
+		
+		<h2>
+			<small>1.</small>
+			mulheres que usam roupas que mostram o corpo merecem ser atacadas
+		</h2>
+		<table style="margin-left: 150.0px;">
+			<tr>
+				<td class="discorda" style="width: 58.346456692913385%;" title="58.35%">
+					<span class="index">11.548556430446194%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 11.548556430446194%;" title="11.55%">
+					<span class="index">58.346456692913385%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 12.808398950131233%;" title="12.81%">
+					<span class="index">12.808398950131233%</span>
+				</td>
+				<td class="concorda" style="width: 13.202099737532807%;" title="13.2%">
+					<span class="index">13.202099737532807%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:4.094488188976378%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>2.</small>
+			as mulatas são mais fogosas do que as mulheres brancas
+		</h2>
+		<table style="margin-left: 300.0px;">
+			<tr>
+				<td class="discorda" style="width: 30.026246719160106%;" title="30.03%">
+					<span class="index">9.553805774278215%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 9.553805774278215%;" title="9.55%">
+					<span class="index">30.026246719160106%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 13.753280839895012%;" title="13.75%">
+					<span class="index">13.753280839895012%</span>
+				</td>
+				<td class="concorda" style="width: 15.643044619422572%;" title="15.64%">
+					<span class="index">15.643044619422572%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:31.023622047244096%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>3.</small>
+			dá para entender que um homem que cresceu em uma família violenta agrida sua mulher
+		</h2>
+		<table style="margin-left: 185.0px;">
+			<tr>
+				<td class="discorda" style="width: 54.38320209973754%;" title="54.38%">
+					<span class="index">9.317585301837271%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 9.317585301837271%;" title="9.32%">
+					<span class="index">54.38320209973754%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 15.800524934383203%;" title="15.8%">
+					<span class="index">15.800524934383203%</span>
+				</td>
+				<td class="concorda" style="width: 18.083989501312338%;" title="18.08%">
+					<span class="index">18.083989501312338%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.4146981627296586%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>4.</small>
+			os homens devem ser a cabeça do lar
+		</h2>
+		<table style="margin-left: 330.0px;">
+			<tr>
+				<td class="discorda" style="width: 24.750656167979002%;" title="24.75%">
+					<span class="index">8.503937007874015%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 8.503937007874015%;" title="8.5%">
+					<span class="index">24.750656167979002%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 22.860892388451443%;" title="22.86%">
+					<span class="index">22.860892388451443%</span>
+				</td>
+				<td class="concorda" style="width: 40.86614173228346%;" title="40.87%">
+					<span class="index">40.86614173228346%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:3.0183727034120738%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>5.</small>
+			casos de violência dentro de casa devem ser discutidos somente entre os membros
+		</h2>
+		<table style="margin-left: 330.0px;">
+			<tr>
+				<td class="discorda" style="width: 25.196850393700785%;" title="25.2%">
+					<span class="index">9.343832020997375%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 9.343832020997375%;" title="9.34%">
+					<span class="index">25.196850393700785%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 29.68503937007874%;" title="29.69%">
+					<span class="index">29.68503937007874%</span>
+				</td>
+				<td class="concorda" style="width: 33.25459317585302%;" title="33.25%">
+					<span class="index">33.25459317585302%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.5196850393700787%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>6.</small>
+			incomoda ver dois homens, ou duas mulheres, se beijando na boca em público
+		</h2>
+		<table style="margin-left: 325.0px;">
+			<tr>
+				<td class="discorda" style="width: 28.21522309711286%;" title="28.22%">
+					<span class="index">6.929133858267717%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 6.929133858267717%;" title="6.93%">
+					<span class="index">28.21522309711286%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 14.251968503937007%;" title="14.25%">
+					<span class="index">14.251968503937007%</span>
+				</td>
+				<td class="concorda" style="width: 44.90813648293963%;" title="44.91%">
+					<span class="index">44.90813648293963%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:5.695538057742782%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>7.</small>
+			se as mulheres soubessem como se comportar, haveria menos estupros
+		</h2>
+		<table style="margin-left: 310.0px;">
+			<tr>
+				<td class="discorda" style="width: 30.26246719160105%;" title="30.26%">
+					<span class="index">7.559055118110236%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 7.559055118110236%;" title="7.56%">
+					<span class="index">30.26246719160105%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 23.175853018372703%;" title="23.18%">
+					<span class="index">23.175853018372703%</span>
+				</td>
+				<td class="concorda" style="width: 35.328083989501316%;" title="35.33%">
+					<span class="index">35.328083989501316%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:3.6745406824146984%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>8.</small>
+			homem que bate na esposa tem que ir para a cadeia
+		</h2>
+		<table style="margin-left: 465.0px;">
+			<tr>
+				<td class="discorda" style="width: 4.566929133858268%;" title="4.57%">
+					<span class="index">2.283464566929134%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 2.283464566929134%;" title="2.28%">
+					<span class="index">4.566929133858268%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 13.333333333333334%;" title="13.33%">
+					<span class="index">13.333333333333334%</span>
+				</td>
+				<td class="concorda" style="width: 78.05774278215223%;" title="78.06%">
+					<span class="index">78.05774278215223%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:1.7585301837270342%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>9.</small>
+			é violência falar mentiras sobre uma mulher para os outros
+		</h2>
+		<table style="margin-left: 370.0px;">
+			<tr>
+				<td class="discorda" style="width: 19.055118110236222%;" title="19.06%">
+					<span class="index">7.480314960629922%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 7.480314960629922%;" title="7.48%">
+					<span class="index">19.055118110236222%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 24.803149606299215%;" title="24.8%">
+					<span class="index">24.803149606299215%</span>
+				</td>
+				<td class="concorda" style="width: 43.333333333333336%;" title="43.33%">
+					<span class="index">43.333333333333336%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:5.328083989501312%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>10.</small>
+			toda mulher sonha em se casar
+		</h2>
+		<table style="margin-left: 410.0px;">
+			<tr>
+				<td class="discorda" style="width: 12.283464566929133%;" title="12.28%">
+					<span class="index">5.853018372703412%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 5.853018372703412%;" title="5.85%">
+					<span class="index">12.283464566929133%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 27.821522309711288%;" title="27.82%">
+					<span class="index">27.821522309711288%</span>
+				</td>
+				<td class="concorda" style="width: 50.944881889763785%;" title="50.94%">
+					<span class="index">50.944881889763785%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:3.0971128608923886%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>11.</small>
+			o que acontece com o casal em casa não interessa aos outros
+		</h2>
+		<table style="margin-left: 405.0px;">
+			<tr>
+				<td class="discorda" style="width: 13.123359580052494%;" title="13.12%">
+					<span class="index">5.879265091863517%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 5.879265091863517%;" title="5.88%">
+					<span class="index">13.123359580052494%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 31.46981627296588%;" title="31.47%">
+					<span class="index">31.46981627296588%</span>
+				</td>
+				<td class="concorda" style="width: 47.16535433070866%;" title="47.17%">
+					<span class="index">47.16535433070866%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.3622047244094486%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>12.</small>
+			quando há violência, os casais devem se separar
+		</h2>
+		<table style="margin-left: 435.0px;">
+			<tr>
+				<td class="discorda" style="width: 8.792650918635172%;" title="8.79%">
+					<span class="index">3.805774278215223%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 3.805774278215223%;" title="3.81%">
+					<span class="index">8.792650918635172%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 23.333333333333332%;" title="23.33%">
+					<span class="index">23.333333333333332%</span>
+				</td>
+				<td class="concorda" style="width: 61.70603674540682%;" title="61.71%">
+					<span class="index">61.70603674540682%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.362204724409449%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>13.</small>
+			casais de pessoas do mesmo sexo devem ter os mesmos direitos dos outros casais
+		</h2>
+		<table style="margin-left: 295.0px;">
+			<tr>
+				<td class="discorda" style="width: 32.6246719160105%;" title="32.62%">
+					<span class="index">7.926509186351706%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 7.926509186351706%;" title="7.93%">
+					<span class="index">32.6246719160105%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 18.53018372703412%;" title="18.53%">
+					<span class="index">18.53018372703412%</span>
+				</td>
+				<td class="concorda" style="width: 31.548556430446194%;" title="31.55%">
+					<span class="index">31.548556430446194%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:9.37007874015748%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>14.</small>
+			dá pra entender que um homem rasgue ou quebre as coisas da mulher se ficou nervoso
+		</h2>
+		<table style="margin-left: 80.0px;">
+			<tr>
+				<td class="discorda" style="width: 71.5748031496063%;" title="71.57%">
+					<span class="index">12.020997375328085%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 12.020997375328085%;" title="12.02%">
+					<span class="index">71.5748031496063%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 8.136482939632545%;" title="8.14%">
+					<span class="index">8.136482939632545%</span>
+				</td>
+				<td class="concorda" style="width: 6.482939632545932%;" title="6.48%">
+					<span class="index">6.482939632545932%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:1.7847769028871392%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>15.</small>
+			um homem pode xingar e gritar com sua própria mulher
+		</h2>
+		<table style="margin-left: 55.0px;">
+			<tr>
+				<td class="discorda" style="width: 76.37795275590551%;" title="76.38%">
+					<span class="index">12.808398950131233%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 12.808398950131233%;" title="12.81%">
+					<span class="index">76.37795275590551%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 4.908136482939632%;" title="4.91%">
+					<span class="index">4.908136482939632%</span>
+				</td>
+				<td class="concorda" style="width: 3.937007874015748%;" title="3.94%">
+					<span class="index">3.937007874015748%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:1.9685039370078738%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>16.</small>
+			é da natureza do homem ser violento
+		</h2>
+		<table style="margin-left: 125.0px;">
+			<tr>
+				<td class="discorda" style="width: 61.86351706036746%;" title="61.86%">
+					<span class="index">12.755905511811024%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 12.755905511811024%;" title="12.76%">
+					<span class="index">61.86351706036746%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 11.286089238845145%;" title="11.29%">
+					<span class="index">11.286089238845145%</span>
+				</td>
+				<td class="concorda" style="width: 10.183727034120734%;" title="10.18%">
+					<span class="index">10.183727034120734%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:3.910761154855643%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>17.</small>
+			em briga de marido e mulher, não se mete a colher
+		</h2>
+		<table style="margin-left: 420.0px;">
+			<tr>
+				<td class="discorda" style="width: 11.076115485564305%;" title="11.08%">
+					<span class="index">5.2493438320209975%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 5.2493438320209975%;" title="5.25%">
+					<span class="index">11.076115485564305%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 23.490813648293962%;" title="23.49%">
+					<span class="index">23.490813648293962%</span>
+				</td>
+				<td class="concorda" style="width: 58.425196850393704%;" title="58.43%">
+					<span class="index">58.425196850393704%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:1.758530183727034%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>18.</small>
+			a roupa suja deve ser lavada em casa
+		</h2>
+		<table style="margin-left: 455.0px;">
+			<tr>
+				<td class="discorda" style="width: 6.325459317585302%;" title="6.33%">
+					<span class="index">3.3070866141732282%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 3.3070866141732282%;" title="3.31%">
+					<span class="index">6.325459317585302%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 22.388451443569554%;" title="22.39%">
+					<span class="index">22.388451443569554%</span>
+				</td>
+				<td class="concorda" style="width: 66.61417322834644%;" title="66.61%">
+					<span class="index">66.61417322834644%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:1.3648293963254594%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>19.</small>
+			uma mulher só se sente realizada quando tem filhos/as
+		</h2>
+		<table style="margin-left: 330.0px;">
+			<tr>
+				<td class="discorda" style="width: 25.170603674540683%;" title="25.17%">
+					<span class="index">9.186351706036746%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 9.186351706036746%;" title="9.19%">
+					<span class="index">25.170603674540683%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 30.89238845144357%;" title="30.89%">
+					<span class="index">30.89238845144357%</span>
+				</td>
+				<td class="concorda" style="width: 28.58267716535433%;" title="28.58%">
+					<span class="index">28.58267716535433%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:6.167979002624672%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>20.</small>
+			a mulher casada deve satisfazer o marido na cama, mesmo quando não tem vontade
+		</h2>
+		<table style="margin-left: 175.0px;">
+			<tr>
+				<td class="discorda" style="width: 53.96325459317586%;" title="53.96%">
+					<span class="index">11.31233595800525%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 11.31233595800525%;" title="11.31%">
+					<span class="index">53.96325459317586%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 13.149606299212598%;" title="13.15%">
+					<span class="index">13.149606299212598%</span>
+				</td>
+				<td class="concorda" style="width: 14.041994750656167%;" title="14.04%">
+					<span class="index">14.041994750656167%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:7.532808398950131%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>21.</small>
+			piada de preto é só brincadeira, não é racismo
+		</h2>
+		<table style="margin-left: 225.0px;">
+			<tr>
+				<td class="discorda" style="width: 41.0498687664042%;" title="41.05%">
+					<span class="index">14.488188976377952%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 14.488188976377952%;" title="14.49%">
+					<span class="index">41.0498687664042%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 22.860892388451443%;" title="22.86%">
+					<span class="index">22.860892388451443%</span>
+				</td>
+				<td class="concorda" style="width: 15.196850393700787%;" title="15.2%">
+					<span class="index">15.196850393700787%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:6.404199475065616%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>22.</small>
+			um casal de dois homens vive um amor tão bonito quanto entre um homem e uma mulher
+		</h2>
+		<table style="margin-left: 270.0px;">
+			<tr>
+				<td class="discorda" style="width: 38.08398950131234%;" title="38.08%">
+					<span class="index">8.11023622047244%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 8.11023622047244%;" title="8.11%">
+					<span class="index">38.08398950131234%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 15.590551181102363%;" title="15.59%">
+					<span class="index">15.590551181102363%</span>
+				</td>
+				<td class="concorda" style="width: 25.53805774278215%;" title="25.54%">
+					<span class="index">25.53805774278215%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:12.677165354330707%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>23.</small>
+			mulher que é agredida e continua com o parceiro gosta de apanhar
+		</h2>
+		<table style="margin-left: 340.0px;">
+			<tr>
+				<td class="discorda" style="width: 23.963254593175854%;" title="23.96%">
+					<span class="index">8.398950131233596%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 8.398950131233596%;" title="8.4%">
+					<span class="index">23.963254593175854%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 22.388451443569554%;" title="22.39%">
+					<span class="index">22.388451443569554%</span>
+				</td>
+				<td class="concorda" style="width: 42.650918635170605%;" title="42.65%">
+					<span class="index">42.650918635170605%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.5984251968503935%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>24.</small>
+			casamento de homem com homem ou de mulher com mulher deve ser proibido
+		</h2>
+		<table style="margin-left: 295.0px;">
+			<tr>
+				<td class="discorda" style="width: 32.047244094488185%;" title="32.05%">
+					<span class="index">8.976377952755906%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 8.976377952755906%;" title="8.98%">
+					<span class="index">32.047244094488185%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 12.887139107611548%;" title="12.89%">
+					<span class="index">12.887139107611548%</span>
+				</td>
+				<td class="concorda" style="width: 38.79265091863517%;" title="38.79%">
+					<span class="index">38.79265091863517%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:7.296587926509186%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>25.</small>
+			a mulher que apanha em casa deve ficar quieta para não prejudicar os filhos
+		</h2>
+		<table style="margin-left: 90.0px;">
+			<tr>
+				<td class="discorda" style="width: 69.81627296587926%;" title="69.82%">
+					<span class="index">12.283464566929133%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 12.283464566929133%;" title="12.28%">
+					<span class="index">69.81627296587926%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 8.47769028871391%;" title="8.48%">
+					<span class="index">8.47769028871391%</span>
+				</td>
+				<td class="concorda" style="width: 6.955380577427822%;" title="6.96%">
+					<span class="index">6.955380577427822%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:2.4671916010498687%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>26.</small>
+			a questão da violência contra as mulheres recebe mais importância do que merece
+		</h2>
+		<table style="margin-left: 135.0px;">
+			<tr>
+				<td class="discorda" style="width: 56.85039370078741%;" title="56.85%">
+					<span class="index">16.167979002624673%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 16.167979002624673%;" title="16.17%">
+					<span class="index">56.85039370078741%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 11.916010498687664%;" title="11.92%">
+					<span class="index">11.916010498687664%</span>
+				</td>
+				<td class="concorda" style="width: 10.524934383202101%;" title="10.52%">
+					<span class="index">10.524934383202101%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:4.540682414698162%">
+				</td>
+			</tr>
+		</table>
+	
+		<h2>
+			<small>27.</small>
+			tem mulher que é pra casar, tem mulher que é pra cama
+		</h2>
+		<table style="margin-left: 325.0px;">
+			<tr>
+				<td class="discorda" style="width: 26.37795275590551%;" title="26.38%">
+					<span class="index">8.923884514435695%</span>
+				</td>
+				<td class="discorda-parcial" style="width: 8.923884514435695%;" title="8.92%">
+					<span class="index">26.37795275590551%</span>
+				</td>
+				<td class="concorda-parcial" style="width: 20.288713910761157%;" title="20.29%">
+					<span class="index">20.288713910761157%</span>
+				</td>
+				<td class="concorda" style="width: 34.59317585301837%;" title="34.59%">
+					<span class="index">34.59317585301837%</span>
+				</td>
+				<td class="" style="background-color:transparent;width:9.816272965879264%">
+				</td>
+			</tr>
+		</table>
+	
+
+
+</div>
+
+<footer>
+
+	<p>
+	Fonte:
+		<a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140327_sips_violencia_mulheres.pdf">Pesquisa [PDF]</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/index.php?option=com_content&view=article&id=21971&catid=10&Itemid=9">Errata</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140404_sips_base.xls">Microdados [Excel]</a>
+		&#8226; <a href="http://goo.gl/FGAmVY">Microdados [Google Drive]</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140404_dicionario_sips.txt">Dicionário de dados</a>
+	</p>
+
+	<p><strong>Compartilhe</strong></p>
+	<!-- AddThis Button BEGIN -->
+	<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+		<a class="addthis_button_twitter"></a>
+		<a class="addthis_button_facebook"></a>
+		<a class="addthis_button_google_plusone_share"></a>
+		<a class="addthis_button_pinterest_share"></a>
+		<a class="addthis_button_email"></a>
+	</div>
+	<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5344e67950e977bf"></script>
+	<!-- AddThis Button END -->
+
+	<p class="license">
+		<a rel="license" class="cc_icons" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_cc.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_by.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_nc.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_sa.png" width="24px"/>
+		</a>
+		<br/>
+		<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+			Creative Commons Atribuição - Não Comercial - Compartilha Igual
+		</a>
+	</p>
+
+	<p>
+	Créditos: <a href="https://twitter.com/mauricio">Maurício Maia</a> - <a href="http://www.saopaulo.io">São Paulo I/O</a>
+	</p>
+</footer>
+
+</body>
+</html>

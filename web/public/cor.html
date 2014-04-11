@@ -1,0 +1,3104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>Visualização: IPEA - Tolerância social à violência contra as mulheres</title>
+  <meta name="twitter:site" content="@mauricio">
+  <meta property="og:site_name" content="São Paulo I/O" />
+  <meta name="twitter:url" content="http://www.saopaulo.io/" />
+  <meta property="og:url" content="http://www.saopaulo.io/">
+  <meta name="twitter:title" content="Visualização: IPEA - Tolerância social à violência contra as mulheres" />
+  <meta property="og:title" content="Visualização: IPEA - Tolerância social à violência contra as mulheres" />
+  <meta name="twitter:description" content="" />
+  <meta property="og:description" content="" />
+  <meta name="twitter:image" content="http://www.saopaulo.io/images/posts/ipea-violencia-contra-mulheres.png" />
+  <meta property="og:image" content="http://www.saopaulo.io/images/posts/ipea-violencia-contra-mulheres.png" />
+  <meta name="twitter:image:width" content="502">
+  <meta name="twitter:image:height" content="1155">
+  <meta property="og:image:width" content="502">
+  <meta property="og:image:height" content="1155">
+  <meta property="og:type" content="website" />
+	<meta name="description" content="Visualização dos microdados da pesquisa “Tolerância social à violência contra as mulheres” do IPEA">
+	<meta name="author" content="São Paulo I/O">
+	<base href="http://www.saopaulo.io/interativos/ipea-violencia-contra-mulher/">
+
+
+	<link href="css/buttons.css" rel="stylesheet" type="text/css">
+
+	<style>
+		html, body {
+			color: #333;
+			font-family: "Helvetica Neue", Arial, sans-serif;
+		}
+		.container {
+			width: 1000px;
+			margin: auto;
+			padding: 0 0 20px 0;
+			text-align: center;
+			background-color: #f7f7f7;
+			background-image: url('images/bg.png');
+		}
+		table {
+			width: 50%;
+			border-spacing: 0;
+			margin-bottom: 15px;
+		}
+		td {
+			padding: 0;
+			height: 20px;
+			vertical-align: middle;
+		}
+		h2 {
+			font-size: 20px;
+			background-color: #f7f7f7;
+		}
+		h2 small {
+			font-size: 80%;
+			font-weight: lighter;
+			color: #777;
+		}
+		.label {
+			float:left;
+			margin-left: 10px;
+			margin-top: -35px;
+			font-size: 90%;
+		}
+		.index {
+			color: #000;
+			font-size: 10px;
+			display: none;
+		}
+		.axis-label {
+			width: 1000px;
+			margin-bottom: 40px;
+			padding: 20px 0 20px 0;
+			font-size: 14px;
+			text-align:left;
+			color: #777;
+			background-color: #f7f7f7;
+			background-image: url('images/bg.png');
+		}
+		.discorda { background-color: #de2d26; }
+		.discorda-parcial { background-color: #fc9272; border-right: 1px solid #000;}
+		.neutro { background-color: #eee; }
+		.concorda-parcial { background-color: #a1d99b; }
+		.concorda { background-color: #31a354; }
+		header,
+		footer {
+			width: 1000px;
+			margin: auto;
+			padding: 0 10px 30px; 10px;
+		}
+		footer {
+			margin-top: 30px;
+			text-align: center;
+		}
+		a {
+			color: #428bca;
+			text-decoration: none;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		.nav {
+			text-align: center;
+			margin-top: 30px;
+		}
+		.nav .home {
+			font-weight: bold;
+		}
+		.legend {
+			text-align: center;
+			margin: 30px auto 0 auto;
+		}
+		.square {
+			width: 15px;
+			height: 15px;
+			margin-left: 15px;
+			border: 0;
+			display: inline-block;
+		}
+		.square:first-child {
+			margin-left: 0;
+		}
+		.cc_icons:hover {
+			text-decoration: none;
+		}
+		.addthis_toolbox {
+			margin: 20px auto 40px auto;
+			width: 180px;
+		}
+	</style>
+
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script>
+		$(function() {
+			$(document).scroll(function(){
+				if ($(this).scrollTop() > 255) {
+					$('#axis').css('position', 'fixed');
+					$('#axis').css('top', '0');
+					$('#axis').css('background-color', 'rgba(247,247,247,.9)');
+				}
+				else {
+					$('#axis').css('position', 'relative');
+					$('#axis').css('top', '');
+					$('#axis').css('background-color', 'rgba(247,247,247,1)');
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+<header>
+	<h1>IPEA - Tolerância social à violência contra as mulheres</h1>
+	<p>
+	Esta visualização exibe as respostas da pesquisa <em>“Tolerância social à violência contra as mulheres”</em> do IPEA, segundo os microdados divulgados pelo instituto.
+	<strong>Não</strong> são considerados modelos adicionais elaborados pela pesquisa...
+	<a href="http://www.saopaulo.io/visualizando-os-microdados-da-pesquisa-ipea-de-tolerancia-social-a-violencia-contra-as-mulheres/">saiba mais</a>
+	</p>
+
+	<div class="nav">
+		<a href="/index.html" class="btn btn-default btn-sm home ">Total</a>
+		<a href="/regiao.html" class="btn btn-default btn-sm ">Região</a>
+		<a href="/idade.html" class="btn btn-default btn-sm ">Idade</a>
+		<a href="/area.html" class="btn btn-default btn-sm ">Area</a>
+		<a href="/sexo.html" class="btn btn-default btn-sm ">Sexo</a>
+		<a href="/cor.html" class="btn btn-default btn-sm active">Cor</a>
+	</div>
+
+	<div class="legend">
+		<span class="square discorda"></span> discorda totalmente
+		<span class="square discorda-parcial"></span> discorda parcialmente
+		<span class="square concorda-parcial"></span> concorda parcialmente
+		<span class="square concorda"></span> concorda totalmente
+	</div>
+</header>
+
+<div class="container">
+	<div id="axis" class="axis-label">
+		<span style="margin-left:93px;">80%</span>
+		<span style="margin-left:66px;">60%</span>
+		<span style="margin-left:66px;">40%</span>
+		<span style="margin-left:66px;">20%</span>
+		<span style="margin-left:166px;">20%</span>
+		<span style="margin-left:65px;">40%</span>
+		<span style="margin-left:67px;">60%</span>
+		<span style="margin-left:66px;">80%</span>
+	</div>
+
+		
+		<h2>
+			<small>1.</small>
+			mulheres que usam roupas que mostram o corpo merecem ser atacadas
+		</h2>
+		
+			<table style="margin-left: 137.9310344827586px;">
+				<tr>
+					<td class="discorda" style="width: 55.172413793103445%;" title="55.17%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">55.172413793103445%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 3.4482758620689653%;" title="3.45%">
+						<span class="index">3.4482758620689653%</span>
+					</td>
+					<td class="concorda" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 120.42062415196744px;">
+				<tr>
+					<td class="discorda" style="width: 64.04341926729987%;" title="64.04%">
+						<span class="index">11.87245590230665%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.87245590230665%;" title="11.87%">
+						<span class="index">64.04341926729987%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 9.905020352781547%;" title="9.91%">
+						<span class="index">9.905020352781547%</span>
+					</td>
+					<td class="concorda" style="width: 10.922659430122117%;" title="10.92%">
+						<span class="index">10.922659430122117%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.256445047489824%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 222.22222222222223px;">
+				<tr>
+					<td class="discorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 171.68998923573736px;">
+				<tr>
+					<td class="discorda" style="width: 53.76749192680301%;" title="53.77%">
+						<span class="index">11.894510226049515%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.894510226049515%;" title="11.89%">
+						<span class="index">53.76749192680301%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.016146393972013%;" title="15.02%">
+						<span class="index">15.016146393972013%</span>
+					</td>
+					<td class="concorda" style="width: 14.96232508073197%;" title="14.96%">
+						<span class="index">14.96232508073197%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.359526372443487%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 161.36363636363637px;">
+				<tr>
+					<td class="discorda" style="width: 58.86363636363636%;" title="58.86%">
+						<span class="index">8.863636363636363%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.863636363636363%;" title="8.86%">
+						<span class="index">58.86363636363636%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.636363636363635%;" title="13.64%">
+						<span class="index">13.636363636363635%</span>
+					</td>
+					<td class="concorda" style="width: 12.727272727272727%;" title="12.73%">
+						<span class="index">12.727272727272727%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.90909090909091%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>2.</small>
+			as mulatas são mais fogosas do que as mulheres brancas
+		</h2>
+		
+			<table style="margin-left: 224.1379310344828px;">
+				<tr>
+					<td class="discorda" style="width: 34.48275862068966%;" title="34.48%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">34.48275862068966%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 3.4482758620689653%;" title="3.45%">
+						<span class="index">3.4482758620689653%</span>
+					</td>
+					<td class="concorda" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:24.137931034482758%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 277.13704206241516px;">
+				<tr>
+					<td class="discorda" style="width: 33.921302578018995%;" title="33.92%">
+						<span class="index">10.651289009497965%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.651289009497965%;" title="10.65%">
+						<span class="index">33.921302578018995%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.636363636363635%;" title="13.64%">
+						<span class="index">13.636363636363635%</span>
+					</td>
+					<td class="concorda" style="width: 13.704206241519673%;" title="13.7%">
+						<span class="index">13.704206241519673%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:28.08683853459973%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 166.66666666666663px;">
+				<tr>
+					<td class="discorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 320.7750269106566px;">
+				<tr>
+					<td class="discorda" style="width: 26.856835306781484%;" title="26.86%">
+						<span class="index">8.988159311087191%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.988159311087191%;" title="8.99%">
+						<span class="index">26.856835306781484%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.078579117330463%;" title="13.08%">
+						<span class="index">13.078579117330463%</span>
+					</td>
+					<td class="concorda" style="width: 16.576964477933263%;" title="16.58%">
+						<span class="index">16.576964477933263%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:34.4994617868676%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 314.77272727272725px;">
+				<tr>
+					<td class="discorda" style="width: 29.545454545454547%;" title="29.55%">
+						<span class="index">7.5%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.5%;" title="7.5%">
+						<span class="index">29.545454545454547%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 17.727272727272727%;" title="17.73%">
+						<span class="index">17.727272727272727%</span>
+					</td>
+					<td class="concorda" style="width: 18.181818181818183%;" title="18.18%">
+						<span class="index">18.181818181818183%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:27.045454545454547%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>3.</small>
+			dá para entender que um homem que cresceu em uma família violenta agrida sua mulher
+		</h2>
+		
+			<table style="margin-left: 103.44827586206895px;">
+				<tr>
+					<td class="discorda" style="width: 65.51724137931035%;" title="65.52%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">65.51724137931035%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 183.5142469470827px;">
+				<tr>
+					<td class="discorda" style="width: 53.79918588873813%;" title="53.8%">
+						<span class="index">9.49796472184532%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.49796472184532%;" title="9.5%">
+						<span class="index">53.79918588873813%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.60379918588874%;" title="15.6%">
+						<span class="index">15.60379918588874%</span>
+					</td>
+					<td class="concorda" style="width: 18.99592944369064%;" title="19.0%">
+						<span class="index">18.99592944369064%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.1031207598371777%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 166.66666666666669px;">
+				<tr>
+					<td class="discorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 180.5705059203445px;">
+				<tr>
+					<td class="discorda" style="width: 54.467168998923576%;" title="54.47%">
+						<span class="index">9.418729817007534%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.418729817007534%;" title="9.42%">
+						<span class="index">54.467168998923576%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 16.254036598493002%;" title="16.25%">
+						<span class="index">16.254036598493002%</span>
+					</td>
+					<td class="concorda" style="width: 17.384284176533907%;" title="17.38%">
+						<span class="index">17.384284176533907%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.4757804090419806%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 184.09090909090907px;">
+				<tr>
+					<td class="discorda" style="width: 55.00000000000001%;" title="55.0%">
+						<span class="index">8.181818181818182%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.181818181818182%;" title="8.18%">
+						<span class="index">55.00000000000001%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.0%;" title="15.0%">
+						<span class="index">15.0%</span>
+					</td>
+					<td class="concorda" style="width: 18.409090909090907%;" title="18.41%">
+						<span class="index">18.409090909090907%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.409090909090909%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>4.</small>
+			os homens devem ser a cabeça do lar
+		</h2>
+		
+			<table style="margin-left: 344.8275862068965px;">
+				<tr>
+					<td class="discorda" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda" style="width: 44.827586206896555%;" title="44.83%">
+						<span class="index">44.827586206896555%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 315.80732700135684px;">
+				<tr>
+					<td class="discorda" style="width: 27.069199457259156%;" title="27.07%">
+						<span class="index">9.76933514246947%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.76933514246947%;" title="9.77%">
+						<span class="index">27.069199457259156%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.219810040705564%;" title="24.22%">
+						<span class="index">24.219810040705564%</span>
+					</td>
+					<td class="concorda" style="width: 35.888738127544094%;" title="35.89%">
+						<span class="index">35.888738127544094%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.0529172320217097%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 346.8783638320775px;">
+				<tr>
+					<td class="discorda" style="width: 23.089343379978473%;" title="23.09%">
+						<span class="index">7.534983853606028%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.534983853606028%;" title="7.53%">
+						<span class="index">23.089343379978473%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 21.367061356297093%;" title="21.37%">
+						<span class="index">21.367061356297093%</span>
+					</td>
+					<td class="concorda" style="width: 45.26372443487621%;" title="45.26%">
+						<span class="index">45.26372443487621%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.744886975242196%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 336.3636363636364px;">
+				<tr>
+					<td class="discorda" style="width: 24.09090909090909%;" title="24.09%">
+						<span class="index">8.636363636363637%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.636363636363637%;" title="8.64%">
+						<span class="index">24.09090909090909%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.545454545454547%;" title="24.55%">
+						<span class="index">24.545454545454547%</span>
+					</td>
+					<td class="concorda" style="width: 38.40909090909091%;" title="38.41%">
+						<span class="index">38.40909090909091%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.3181818181818175%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>5.</small>
+			casos de violência dentro de casa devem ser discutidos somente entre os membros
+		</h2>
+		
+			<table style="margin-left: 344.8275862068965px;">
+				<tr>
+					<td class="discorda" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 34.48275862068966%;" title="34.48%">
+						<span class="index">34.48275862068966%</span>
+					</td>
+					<td class="concorda" style="width: 34.48275862068966%;" title="34.48%">
+						<span class="index">34.48275862068966%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 330.393487109905px;">
+				<tr>
+					<td class="discorda" style="width: 23.405698778833106%;" title="23.41%">
+						<span class="index">10.515603799185888%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.515603799185888%;" title="10.52%">
+						<span class="index">23.405698778833106%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 30.05427408412483%;" title="30.05%">
+						<span class="index">30.05427408412483%</span>
+					</td>
+					<td class="concorda" style="width: 33.51424694708277%;" title="33.51%">
+						<span class="index">33.51424694708277%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.5101763907734056%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 333.33333333333337px;">
+				<tr>
+					<td class="discorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 327.502691065662px;">
+				<tr>
+					<td class="discorda" style="width: 25.72658772874058%;" title="25.73%">
+						<span class="index">8.772874058127018%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.772874058127018%;" title="8.77%">
+						<span class="index">25.72658772874058%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 29.38643702906351%;" title="29.39%">
+						<span class="index">29.38643702906351%</span>
+					</td>
+					<td class="concorda" style="width: 33.63832077502691%;" title="33.64%">
+						<span class="index">33.63832077502691%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.4757804090419806%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 314.77272727272725px;">
+				<tr>
+					<td class="discorda" style="width: 28.863636363636363%;" title="28.86%">
+						<span class="index">8.181818181818182%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.181818181818182%;" title="8.18%">
+						<span class="index">28.863636363636363%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 29.09090909090909%;" title="29.09%">
+						<span class="index">29.09090909090909%</span>
+					</td>
+					<td class="concorda" style="width: 30.909090909090907%;" title="30.91%">
+						<span class="index">30.909090909090907%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.9545454545454546%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>6.</small>
+			incomoda ver dois homens, ou duas mulheres, se beijando na boca em público
+		</h2>
+		
+			<table style="margin-left: 224.1379310344828px;">
+				<tr>
+					<td class="discorda" style="width: 41.37931034482759%;" title="41.38%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">41.37931034482759%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda" style="width: 31.03448275862069%;" title="31.03%">
+						<span class="index">31.03448275862069%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.896551724137931%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 336.83853459972863px;">
+				<tr>
+					<td class="discorda" style="width: 25.91587516960651%;" title="25.92%">
+						<span class="index">6.7164179104477615%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.7164179104477615%;" title="6.72%">
+						<span class="index">25.91587516960651%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.739484396200815%;" title="15.74%">
+						<span class="index">15.739484396200815%</span>
+					</td>
+					<td class="concorda" style="width: 47.76119402985074%;" title="47.76%">
+						<span class="index">47.76119402985074%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.8670284938941655%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 277.7777777777778px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 314.0473627556512px;">
+				<tr>
+					<td class="discorda" style="width: 30.247578040904198%;" title="30.25%">
+						<span class="index">6.942949407965554%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.942949407965554%;" title="6.94%">
+						<span class="index">30.247578040904198%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.40150699677072%;" title="13.4%">
+						<span class="index">13.40150699677072%</span>
+					</td>
+					<td class="concorda" style="width: 41.980624327233585%;" title="41.98%">
+						<span class="index">41.980624327233585%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.427341227125941%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 332.95454545454544px;">
+				<tr>
+					<td class="discorda" style="width: 26.590909090909093%;" title="26.59%">
+						<span class="index">6.8181818181818175%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.8181818181818175%;" title="6.82%">
+						<span class="index">26.590909090909093%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.40909090909091%;" title="13.41%">
+						<span class="index">13.40909090909091%</span>
+					</td>
+					<td class="concorda" style="width: 48.63636363636364%;" title="48.64%">
+						<span class="index">48.63636363636364%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.545454545454545%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>7.</small>
+			se as mulheres soubessem como se comportar, haveria menos estupros
+		</h2>
+		
+			<table style="margin-left: 241.37931034482756px;">
+				<tr>
+					<td class="discorda" style="width: 31.03448275862069%;" title="31.03%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">31.03448275862069%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="concorda" style="width: 34.48275862068966%;" title="34.48%">
+						<span class="index">34.48275862068966%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 294.77611940298505px;">
+				<tr>
+					<td class="discorda" style="width: 32.90366350067843%;" title="32.9%">
+						<span class="index">8.14111261872456%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.14111261872456%;" title="8.14%">
+						<span class="index">32.90366350067843%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.523744911804613%;" title="22.52%">
+						<span class="index">22.523744911804613%</span>
+					</td>
+					<td class="concorda" style="width: 33.85345997286296%;" title="33.85%">
+						<span class="index">33.85345997286296%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.5780189959294435%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 330.19375672766415px;">
+				<tr>
+					<td class="discorda" style="width: 26.80301399354144%;" title="26.8%">
+						<span class="index">7.158234660925726%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.158234660925726%;" title="7.16%">
+						<span class="index">26.80301399354144%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.81162540365985%;" title="24.81%">
+						<span class="index">24.81162540365985%</span>
+					</td>
+					<td class="concorda" style="width: 37.29817007534984%;" title="37.3%">
+						<span class="index">37.29817007534984%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.928955866523143%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 286.3636363636364px;">
+				<tr>
+					<td class="discorda" style="width: 36.13636363636364%;" title="36.14%">
+						<span class="index">6.59090909090909%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.59090909090909%;" title="6.59%">
+						<span class="index">36.13636363636364%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 19.545454545454547%;" title="19.55%">
+						<span class="index">19.545454545454547%</span>
+					</td>
+					<td class="concorda" style="width: 31.590909090909093%;" title="31.59%">
+						<span class="index">31.590909090909093%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.136363636363637%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>8.</small>
+			homem que bate na esposa tem que ir para a cadeia
+		</h2>
+		
+			<table style="margin-left: 431.0344827586207px;">
+				<tr>
+					<td class="discorda" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda" style="width: 72.41379310344827%;" title="72.41%">
+						<span class="index">72.41379310344827%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 463.3649932157395px;">
+				<tr>
+					<td class="discorda" style="width: 4.681139755766622%;" title="4.68%">
+						<span class="index">2.645861601085482%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 2.645861601085482%;" title="2.65%">
+						<span class="index">4.681139755766622%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 14.111261872455902%;" title="14.11%">
+						<span class="index">14.111261872455902%</span>
+					</td>
+					<td class="concorda" style="width: 76.79782903663501%;" title="76.8%">
+						<span class="index">76.79782903663501%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.7639077340569878%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 500.0px;">
+				<tr>
+					<td class="discorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 472.28202368137784px;">
+				<tr>
+					<td class="discorda" style="width: 3.659849300322928%;" title="3.66%">
+						<span class="index">1.883745963401507%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 1.883745963401507%;" title="1.88%">
+						<span class="index">3.659849300322928%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.248654467168999%;" title="11.25%">
+						<span class="index">11.248654467168999%</span>
+					</td>
+					<td class="concorda" style="width: 81.70075349838535%;" title="81.7%">
+						<span class="index">81.70075349838535%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.5069967707212055%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 447.72727272727275px;">
+				<tr>
+					<td class="discorda" style="width: 7.954545454545454%;" title="7.95%">
+						<span class="index">2.5%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 2.5%;" title="2.5%">
+						<span class="index">7.954545454545454%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 19.318181818181817%;" title="19.32%">
+						<span class="index">19.318181818181817%</span>
+					</td>
+					<td class="concorda" style="width: 67.5%;" title="67.5%">
+						<span class="index">67.5%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.7272727272727275%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>9.</small>
+			é violência falar mentiras sobre uma mulher para os outros
+		</h2>
+		
+			<table style="margin-left: 310.3448275862069px;">
+				<tr>
+					<td class="discorda" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda" style="width: 44.827586206896555%;" title="44.83%">
+						<span class="index">44.827586206896555%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 370.0814111261873px;">
+				<tr>
+					<td class="discorda" style="width: 19.53867028493894%;" title="19.54%">
+						<span class="index">6.445047489823609%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.445047489823609%;" title="6.45%">
+						<span class="index">19.53867028493894%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 21.30257801899593%;" title="21.3%">
+						<span class="index">21.30257801899593%</span>
+					</td>
+					<td class="concorda" style="width: 48.032564450474894%;" title="48.03%">
+						<span class="index">48.032564450474894%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.681139755766621%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 277.7777777777778px;">
+				<tr>
+					<td class="discorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 374.5963401506997px;">
+				<tr>
+					<td class="discorda" style="width: 16.953713670613563%;" title="16.95%">
+						<span class="index">8.127018299246501%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.127018299246501%;" title="8.13%">
+						<span class="index">16.953713670613563%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.717976318622174%;" title="27.72%">
+						<span class="index">27.717976318622174%</span>
+					</td>
+					<td class="concorda" style="width: 41.28094725511303%;" title="41.28%">
+						<span class="index">41.28094725511303%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.920344456404736%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 332.95454545454544px;">
+				<tr>
+					<td class="discorda" style="width: 26.136363636363637%;" title="26.14%">
+						<span class="index">7.2727272727272725%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.2727272727272725%;" title="7.27%">
+						<span class="index">26.136363636363637%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 25.227272727272727%;" title="25.23%">
+						<span class="index">25.227272727272727%</span>
+					</td>
+					<td class="concorda" style="width: 36.13636363636364%;" title="36.14%">
+						<span class="index">36.13636363636364%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.2272727272727275%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>10.</small>
+			toda mulher sonha em se casar
+		</h2>
+		
+			<table style="margin-left: 327.58620689655174px;">
+				<tr>
+					<td class="discorda" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="concorda" style="width: 51.724137931034484%;" title="51.72%">
+						<span class="index">51.724137931034484%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 407.39484396200817px;">
+				<tr>
+					<td class="discorda" style="width: 11.940298507462686%;" title="11.94%">
+						<span class="index">6.580732700135686%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.580732700135686%;" title="6.58%">
+						<span class="index">11.940298507462686%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.883310719131615%;" title="27.88%">
+						<span class="index">27.883310719131615%</span>
+					</td>
+					<td class="concorda" style="width: 51.01763907734057%;" title="51.02%">
+						<span class="index">51.01763907734057%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.578018995929444%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 500.0px;">
+				<tr>
+					<td class="discorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="concorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 416.84607104413345px;">
+				<tr>
+					<td class="discorda" style="width: 11.840688912809473%;" title="11.84%">
+						<span class="index">4.7900968783638325%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 4.7900968783638325%;" title="4.79%">
+						<span class="index">11.840688912809473%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 28.202368137782564%;" title="28.2%">
+						<span class="index">28.202368137782564%</span>
+					</td>
+					<td class="concorda" style="width: 51.77610333692142%;" title="51.78%">
+						<span class="index">51.77610333692142%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.3907427341227128%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 387.5px;">
+				<tr>
+					<td class="discorda" style="width: 15.0%;" title="15.0%">
+						<span class="index">7.5%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.5%;" title="7.5%">
+						<span class="index">15.0%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 26.81818181818182%;" title="26.82%">
+						<span class="index">26.81818181818182%</span>
+					</td>
+					<td class="concorda" style="width: 47.04545454545455%;" title="47.05%">
+						<span class="index">47.04545454545455%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.6363636363636362%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>11.</small>
+			o que acontece com o casal em casa não interessa aos outros
+		</h2>
+		
+			<table style="margin-left: 413.7931034482759px;">
+				<tr>
+					<td class="discorda" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">3.4482758620689653%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 3.4482758620689653%;" title="3.45%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.586206896551722%;" title="27.59%">
+						<span class="index">27.586206896551722%</span>
+					</td>
+					<td class="concorda" style="width: 55.172413793103445%;" title="55.17%">
+						<span class="index">55.172413793103445%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 410.1085481682496px;">
+				<tr>
+					<td class="discorda" style="width: 11.87245590230665%;" title="11.87%">
+						<span class="index">6.1058344640434195%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.1058344640434195%;" title="6.11%">
+						<span class="index">11.87245590230665%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 29.6472184531886%;" title="29.65%">
+						<span class="index">29.6472184531886%</span>
+					</td>
+					<td class="concorda" style="width: 50.3392130257802%;" title="50.34%">
+						<span class="index">50.3392130257802%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.03527815468114%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="concorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 406.08180839612487px;">
+				<tr>
+					<td class="discorda" style="width: 13.455328310010763%;" title="13.46%">
+						<span class="index">5.3283100107642625%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 5.3283100107642625%;" title="5.33%">
+						<span class="index">13.455328310010763%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 33.10010764262648%;" title="33.1%">
+						<span class="index">33.10010764262648%</span>
+					</td>
+					<td class="concorda" style="width: 45.64047362755651%;" title="45.64%">
+						<span class="index">45.64047362755651%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.475780409041981%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 382.95454545454544px;">
+				<tr>
+					<td class="discorda" style="width: 15.681818181818183%;" title="15.68%">
+						<span class="index">7.727272727272727%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.727272727272727%;" title="7.73%">
+						<span class="index">15.681818181818183%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 30.681818181818183%;" title="30.68%">
+						<span class="index">30.681818181818183%</span>
+					</td>
+					<td class="concorda" style="width: 42.72727272727273%;" title="42.73%">
+						<span class="index">42.72727272727273%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.1818181818181817%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>12.</small>
+			quando há violência, os casais devem se separar
+		</h2>
+		
+			<table style="margin-left: 431.0344827586207px;">
+				<tr>
+					<td class="discorda" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda" style="width: 62.06896551724138%;" title="62.07%">
+						<span class="index">62.06896551724138%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 437.58480325644507px;">
+				<tr>
+					<td class="discorda" style="width: 8.07327001356852%;" title="8.07%">
+						<span class="index">4.409769335142469%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 4.409769335142469%;" title="4.41%">
+						<span class="index">8.07327001356852%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 21.099050203527817%;" title="21.1%">
+						<span class="index">21.099050203527817%</span>
+					</td>
+					<td class="concorda" style="width: 63.839891451831754%;" title="63.84%">
+						<span class="index">63.839891451831754%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.5780189959294435%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 438.3745963401507px;">
+				<tr>
+					<td class="discorda" style="width: 8.772874058127018%;" title="8.77%">
+						<span class="index">3.552206673842842%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 3.552206673842842%;" title="3.55%">
+						<span class="index">8.772874058127018%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.058127018299245%;" title="24.06%">
+						<span class="index">24.058127018299245%</span>
+					</td>
+					<td class="concorda" style="width: 61.51776103336921%;" title="61.52%">
+						<span class="index">61.51776103336921%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.0990312163616793%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 430.6818181818182px;">
+				<tr>
+					<td class="discorda" style="width: 11.136363636363637%;" title="11.14%">
+						<span class="index">2.727272727272727%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 2.727272727272727%;" title="2.73%">
+						<span class="index">11.136363636363637%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.727272727272727%;" title="27.73%">
+						<span class="index">27.727272727272727%</span>
+					</td>
+					<td class="concorda" style="width: 55.45454545454545%;" title="55.45%">
+						<span class="index">55.45454545454545%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.954545454545454%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>13.</small>
+			casais de pessoas do mesmo sexo devem ter os mesmos direitos dos outros casais
+		</h2>
+		
+			<table style="margin-left: 327.58620689655174px;">
+				<tr>
+					<td class="discorda" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda" style="width: 48.275862068965516%;" title="48.28%">
+						<span class="index">48.275862068965516%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:10.344827586206897%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 282.5644504748982px;">
+				<tr>
+					<td class="discorda" style="width: 34.87109905020353%;" title="34.87%">
+						<span class="index">8.616010854816825%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.616010854816825%;" title="8.62%">
+						<span class="index">34.87109905020353%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 19.26729986431479%;" title="19.27%">
+						<span class="index">19.26729986431479%</span>
+					</td>
+					<td class="concorda" style="width: 30.257801899592945%;" title="30.26%">
+						<span class="index">30.257801899592945%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.987788331071913%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 277.7777777777778px;">
+				<tr>
+					<td class="discorda" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="concorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 315.39289558665234px;">
+				<tr>
+					<td class="discorda" style="width: 29.81700753498385%;" title="29.82%">
+						<span class="index">7.104413347685684%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.104413347685684%;" title="7.1%">
+						<span class="index">29.81700753498385%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 18.353067814854683%;" title="18.35%">
+						<span class="index">18.353067814854683%</span>
+					</td>
+					<td class="concorda" style="width: 32.9924650161464%;" title="32.99%">
+						<span class="index">32.9924650161464%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.733046286329387%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 268.1818181818182px;">
+				<tr>
+					<td class="discorda" style="width: 37.5%;" title="37.5%">
+						<span class="index">8.863636363636363%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.863636363636363%;" title="8.86%">
+						<span class="index">37.5%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 17.272727272727273%;" title="17.27%">
+						<span class="index">17.272727272727273%</span>
+					</td>
+					<td class="concorda" style="width: 29.09090909090909%;" title="29.09%">
+						<span class="index">29.09090909090909%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.272727272727273%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>14.</small>
+			dá pra entender que um homem rasgue ou quebre as coisas da mulher se ficou nervoso
+		</h2>
+		
+			<table style="margin-left: 137.93103448275866px;">
+				<tr>
+					<td class="discorda" style="width: 58.620689655172406%;" title="58.62%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">58.620689655172406%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="concorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.896551724137931%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 71.23473541383993px;">
+				<tr>
+					<td class="discorda" style="width: 72.38805970149254%;" title="72.39%">
+						<span class="index">13.364993215739485%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.364993215739485%;" title="13.36%">
+						<span class="index">72.38805970149254%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 7.327001356852103%;" title="7.33%">
+						<span class="index">7.327001356852103%</span>
+					</td>
+					<td class="concorda" style="width: 5.223880597014925%;" title="5.22%">
+						<span class="index">5.223880597014925%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.6960651289009498%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 55.5555555555556px;">
+				<tr>
+					<td class="discorda" style="width: 88.88888888888889%;" title="88.89%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">88.88888888888889%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 86.92142088266951px;">
+				<tr>
+					<td class="discorda" style="width: 71.68998923573736%;" title="71.69%">
+						<span class="index">10.92572658772874%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.92572658772874%;" title="10.93%">
+						<span class="index">71.68998923573736%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 8.44994617868676%;" title="8.45%">
+						<span class="index">8.44994617868676%</span>
+					</td>
+					<td class="concorda" style="width: 7.158234660925726%;" title="7.16%">
+						<span class="index">7.158234660925726%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.776103336921421%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 94.31818181818187px;">
+				<tr>
+					<td class="discorda" style="width: 68.86363636363636%;" title="68.86%">
+						<span class="index">12.272727272727273%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.272727272727273%;" title="12.27%">
+						<span class="index">68.86363636363636%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 8.636363636363637%;" title="8.64%">
+						<span class="index">8.636363636363637%</span>
+					</td>
+					<td class="concorda" style="width: 8.409090909090908%;" title="8.41%">
+						<span class="index">8.409090909090908%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.8181818181818181%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>15.</small>
+			um homem pode xingar e gritar com sua própria mulher
+		</h2>
+		
+			<table style="margin-left: 103.44827586206895px;">
+				<tr>
+					<td class="discorda" style="width: 65.51724137931035%;" title="65.52%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">65.51724137931035%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 55.63093622795111px;">
+				<tr>
+					<td class="discorda" style="width: 76.18724559023067%;" title="76.19%">
+						<span class="index">12.686567164179104%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.686567164179104%;" title="12.69%">
+						<span class="index">76.18724559023067%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 4.341926729986431%;" title="4.34%">
+						<span class="index">4.341926729986431%</span>
+					</td>
+					<td class="concorda" style="width: 4.1383989145183175%;" title="4.14%">
+						<span class="index">4.1383989145183175%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.645861601085482%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 55.5555555555556px;">
+				<tr>
+					<td class="discorda" style="width: 77.77777777777779%;" title="77.78%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">77.77777777777779%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 46.555435952637254px;">
+				<tr>
+					<td class="discorda" style="width: 77.98708288482239%;" title="77.99%">
+						<span class="index">12.701829924650163%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.701829924650163%;" title="12.7%">
+						<span class="index">77.98708288482239%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 5.059203444564048%;" title="5.06%">
+						<span class="index">5.059203444564048%</span>
+					</td>
+					<td class="concorda" style="width: 2.906350914962325%;" title="2.91%">
+						<span class="index">2.906350914962325%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.3455328310010763%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 77.27272727272725px;">
+				<tr>
+					<td class="discorda" style="width: 70.9090909090909%;" title="70.91%">
+						<span class="index">13.636363636363635%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.636363636363635%;" title="13.64%">
+						<span class="index">70.9090909090909%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 5.454545454545454%;" title="5.45%">
+						<span class="index">5.454545454545454%</span>
+					</td>
+					<td class="concorda" style="width: 7.5%;" title="7.5%">
+						<span class="index">7.5%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.5%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>16.</small>
+			é da natureza do homem ser violento
+		</h2>
+		
+			<table style="margin-left: 172.4137931034483px;">
+				<tr>
+					<td class="discorda" style="width: 48.275862068965516%;" title="48.28%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">48.275862068965516%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="concorda" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 111.94029850746267px;">
+				<tr>
+					<td class="discorda" style="width: 64.92537313432835%;" title="64.93%">
+						<span class="index">12.686567164179104%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.686567164179104%;" title="12.69%">
+						<span class="index">64.92537313432835%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 9.905020352781547%;" title="9.91%">
+						<span class="index">9.905020352781547%</span>
+					</td>
+					<td class="concorda" style="width: 9.430122116689281%;" title="9.43%">
+						<span class="index">9.430122116689281%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.0529172320217097%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 222.22222222222223px;">
+				<tr>
+					<td class="discorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:22.22222222222222%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 130.24757804090422px;">
+				<tr>
+					<td class="discorda" style="width: 60.65662002152853%;" title="60.66%">
+						<span class="index">13.293864370290635%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.293864370290635%;" title="13.29%">
+						<span class="index">60.65662002152853%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.141011840688913%;" title="11.14%">
+						<span class="index">11.141011840688913%</span>
+					</td>
+					<td class="concorda" style="width: 10.76426264800861%;" title="10.76%">
+						<span class="index">10.76426264800861%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.144241119483316%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 157.95454545454544px;">
+				<tr>
+					<td class="discorda" style="width: 57.72727272727273%;" title="57.73%">
+						<span class="index">10.681818181818182%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.681818181818182%;" title="10.68%">
+						<span class="index">57.72727272727273%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 16.363636363636363%;" title="16.36%">
+						<span class="index">16.363636363636363%</span>
+					</td>
+					<td class="concorda" style="width: 9.772727272727273%;" title="9.77%">
+						<span class="index">9.772727272727273%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.454545454545455%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>17.</small>
+			em briga de marido e mulher, não se mete a colher
+		</h2>
+		
+			<table style="margin-left: 413.7931034482759px;">
+				<tr>
+					<td class="discorda" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.586206896551722%;" title="27.59%">
+						<span class="index">27.586206896551722%</span>
+					</td>
+					<td class="concorda" style="width: 51.724137931034484%;" title="51.72%">
+						<span class="index">51.724137931034484%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 414.8575305291723px;">
+				<tr>
+					<td class="discorda" style="width: 10.990502035278155%;" title="10.99%">
+						<span class="index">6.0379918588873815%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.0379918588873815%;" title="6.04%">
+						<span class="index">10.990502035278155%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.762550881953867%;" title="24.76%">
+						<span class="index">24.762550881953867%</span>
+					</td>
+					<td class="concorda" style="width: 56.51289009497965%;" title="56.51%">
+						<span class="index">56.51289009497965%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.6960651289009498%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 444.44444444444446px;">
+				<tr>
+					<td class="discorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 430.3013993541442px;">
+				<tr>
+					<td class="discorda" style="width: 9.741657696447794%;" title="9.74%">
+						<span class="index">4.198062432723358%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 4.198062432723358%;" title="4.2%">
+						<span class="index">9.741657696447794%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.712594187298173%;" title="22.71%">
+						<span class="index">22.712594187298173%</span>
+					</td>
+					<td class="concorda" style="width: 62.05597416576965%;" title="62.06%">
+						<span class="index">62.05597416576965%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.2917115177610334%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 379.54545454545456px;">
+				<tr>
+					<td class="discorda" style="width: 17.045454545454543%;" title="17.05%">
+						<span class="index">7.045454545454545%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.045454545454545%;" title="7.05%">
+						<span class="index">17.045454545454543%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.272727272727273%;" title="22.27%">
+						<span class="index">22.272727272727273%</span>
+					</td>
+					<td class="concorda" style="width: 49.77272727272727%;" title="49.77%">
+						<span class="index">49.77272727272727%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.8636363636363633%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>18.</small>
+			a roupa suja deve ser lavada em casa
+		</h2>
+		
+			<table style="margin-left: 448.2758620689655px;">
+				<tr>
+					<td class="discorda" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">3.4482758620689653%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 3.4482758620689653%;" title="3.45%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 31.03448275862069%;" title="31.03%">
+						<span class="index">31.03448275862069%</span>
+					</td>
+					<td class="concorda" style="width: 58.620689655172406%;" title="58.62%">
+						<span class="index">58.620689655172406%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 447.4219810040706px;">
+				<tr>
+					<td class="discorda" style="width: 6.241519674355495%;" title="6.24%">
+						<span class="index">4.274084124830393%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 4.274084124830393%;" title="4.27%">
+						<span class="index">6.241519674355495%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 23.812754409769337%;" title="23.81%">
+						<span class="index">23.812754409769337%</span>
+					</td>
+					<td class="concorda" style="width: 64.38263229308005%;" title="64.38%">
+						<span class="index">64.38263229308005%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.289009497964722%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 444.44444444444446px;">
+				<tr>
+					<td class="discorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="concorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 463.6706135629709px;">
+				<tr>
+					<td class="discorda" style="width: 4.951560818083961%;" title="4.95%">
+						<span class="index">2.3143164693218514%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 2.3143164693218514%;" title="2.31%">
+						<span class="index">4.951560818083961%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 20.398277717976317%;" title="20.4%">
+						<span class="index">20.398277717976317%</span>
+					</td>
+					<td class="concorda" style="width: 70.8826695371367%;" title="70.88%">
+						<span class="index">70.8826695371367%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.4531754574811624%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 417.04545454545456px;">
+				<tr>
+					<td class="discorda" style="width: 12.272727272727273%;" title="12.27%">
+						<span class="index">4.318181818181818%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 4.318181818181818%;" title="4.32%">
+						<span class="index">12.272727272727273%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 25.681818181818183%;" title="25.68%">
+						<span class="index">25.681818181818183%</span>
+					</td>
+					<td class="concorda" style="width: 56.59090909090909%;" title="56.59%">
+						<span class="index">56.59090909090909%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.1363636363636365%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>19.</small>
+			uma mulher só se sente realizada quando tem filhos/as
+		</h2>
+		
+			<table style="margin-left: 224.1379310344828px;">
+				<tr>
+					<td class="discorda" style="width: 41.37931034482759%;" title="41.38%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">41.37931034482759%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 315.46811397557667px;">
+				<tr>
+					<td class="discorda" style="width: 26.322930800542743%;" title="26.32%">
+						<span class="index">10.583446404341927%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.583446404341927%;" title="10.58%">
+						<span class="index">26.322930800542743%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 29.986431478968793%;" title="29.99%">
+						<span class="index">29.986431478968793%</span>
+					</td>
+					<td class="concorda" style="width: 28.83310719131615%;" title="28.83%">
+						<span class="index">28.83310719131615%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.274084124830393%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 277.7777777777778px;">
+				<tr>
+					<td class="discorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="concorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 341.227125941873px;">
+				<tr>
+					<td class="discorda" style="width: 23.78902045209903%;" title="23.79%">
+						<span class="index">7.965554359526372%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.965554359526372%;" title="7.97%">
+						<span class="index">23.78902045209903%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 31.646932185145317%;" title="31.65%">
+						<span class="index">31.646932185145317%</span>
+					</td>
+					<td class="concorda" style="width: 28.686759956942947%;" title="28.69%">
+						<span class="index">28.686759956942947%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.911733046286329%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 323.8636363636364px;">
+				<tr>
+					<td class="discorda" style="width: 25.90909090909091%;" title="25.91%">
+						<span class="index">9.318181818181818%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.318181818181818%;" title="9.32%">
+						<span class="index">25.90909090909091%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 30.681818181818183%;" title="30.68%">
+						<span class="index">30.681818181818183%</span>
+					</td>
+					<td class="concorda" style="width: 28.636363636363637%;" title="28.64%">
+						<span class="index">28.636363636363637%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.454545454545455%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>20.</small>
+			a mulher casada deve satisfazer o marido na cama, mesmo quando não tem vontade
+		</h2>
+		
+			<table style="margin-left: 206.8965517241379px;">
+				<tr>
+					<td class="discorda" style="width: 48.275862068965516%;" title="48.28%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">48.275862068965516%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 20.689655172413794%;" title="20.69%">
+						<span class="index">20.689655172413794%</span>
+					</td>
+					<td class="concorda" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:10.344827586206897%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 147.89687924016283px;">
+				<tr>
+					<td class="discorda" style="width: 57.93758480325645%;" title="57.94%">
+						<span class="index">12.48303934871099%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.48303934871099%;" title="12.48%">
+						<span class="index">57.93758480325645%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 12.82225237449118%;" title="12.82%">
+						<span class="index">12.82225237449118%</span>
+					</td>
+					<td class="concorda" style="width: 9.972862957937584%;" title="9.97%">
+						<span class="index">9.972862957937584%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.784260515603799%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 55.5555555555556px;">
+				<tr>
+					<td class="discorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:11.11111111111111%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 186.22174381054896px;">
+				<tr>
+					<td class="discorda" style="width: 52.20667384284177%;" title="52.21%">
+						<span class="index">10.54897739504844%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.54897739504844%;" title="10.55%">
+						<span class="index">52.20667384284177%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 12.64800861141012%;" title="12.65%">
+						<span class="index">12.64800861141012%</span>
+					</td>
+					<td class="concorda" style="width: 16.953713670613563%;" title="16.95%">
+						<span class="index">16.953713670613563%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.642626480086115%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 206.81818181818187px;">
+				<tr>
+					<td class="discorda" style="width: 48.18181818181818%;" title="48.18%">
+						<span class="index">10.454545454545453%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.454545454545453%;" title="10.45%">
+						<span class="index">48.18181818181818%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 16.136363636363637%;" title="16.14%">
+						<span class="index">16.136363636363637%</span>
+					</td>
+					<td class="concorda" style="width: 15.909090909090908%;" title="15.91%">
+						<span class="index">15.909090909090908%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:9.318181818181818%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>21.</small>
+			piada de preto é só brincadeira, não é racismo
+		</h2>
+		
+			<table style="margin-left: 241.37931034482756px;">
+				<tr>
+					<td class="discorda" style="width: 41.37931034482759%;" title="41.38%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">41.37931034482759%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.586206896551722%;" title="27.59%">
+						<span class="index">27.586206896551722%</span>
+					</td>
+					<td class="concorda" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 207.59837177747625px;">
+				<tr>
+					<td class="discorda" style="width: 44.097693351424695%;" title="44.1%">
+						<span class="index">14.382632293080055%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 14.382632293080055%;" title="14.38%">
+						<span class="index">44.097693351424695%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 20.013568521031207%;" title="20.01%">
+						<span class="index">20.013568521031207%</span>
+					</td>
+					<td class="concorda" style="width: 14.993215739484397%;" title="14.99%">
+						<span class="index">14.993215739484397%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.512890094979647%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 111.11111111111114px;">
+				<tr>
+					<td class="discorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 234.66092572658772px;">
+				<tr>
+					<td class="discorda" style="width: 37.94402583423035%;" title="37.94%">
+						<span class="index">15.123789020452099%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 15.123789020452099%;" title="15.12%">
+						<span class="index">37.94402583423035%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 25.29601722282024%;" title="25.3%">
+						<span class="index">25.29601722282024%</span>
+					</td>
+					<td class="concorda" style="width: 15.608180839612487%;" title="15.61%">
+						<span class="index">15.608180839612487%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.027987082884822%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 220.45454545454544px;">
+				<tr>
+					<td class="discorda" style="width: 43.40909090909091%;" title="43.41%">
+						<span class="index">12.5%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.5%;" title="12.5%">
+						<span class="index">43.40909090909091%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.272727272727273%;" title="22.27%">
+						<span class="index">22.272727272727273%</span>
+					</td>
+					<td class="concorda" style="width: 13.863636363636363%;" title="13.86%">
+						<span class="index">13.863636363636363%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.954545454545454%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>22.</small>
+			um casal de dois homens vive um amor tão bonito quanto entre um homem e uma mulher
+		</h2>
+		
+			<table style="margin-left: 310.3448275862069px;">
+				<tr>
+					<td class="discorda" style="width: 27.586206896551722%;" title="27.59%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">27.586206896551722%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda" style="width: 37.93103448275862%;" title="37.93%">
+						<span class="index">37.93103448275862%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:10.344827586206897%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 253.7313432835821px;">
+				<tr>
+					<td class="discorda" style="width: 40.298507462686565%;" title="40.3%">
+						<span class="index">8.955223880597014%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.955223880597014%;" title="8.96%">
+						<span class="index">40.298507462686565%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.739484396200815%;" title="15.74%">
+						<span class="index">15.739484396200815%</span>
+					</td>
+					<td class="concorda" style="width: 25.10176390773406%;" title="25.1%">
+						<span class="index">25.10176390773406%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:9.905020352781547%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:22.22222222222222%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 287.9440258342304px;">
+				<tr>
+					<td class="discorda" style="width: 35.6297093649085%;" title="35.63%">
+						<span class="index">6.7814854682454255%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.7814854682454255%;" title="6.78%">
+						<span class="index">35.6297093649085%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 15.66200215285253%;" title="15.66%">
+						<span class="index">15.66200215285253%</span>
+					</td>
+					<td class="concorda" style="width: 25.941872981700755%;" title="25.94%">
+						<span class="index">25.941872981700755%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:15.984930032292787%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 235.22727272727275px;">
+				<tr>
+					<td class="discorda" style="width: 42.04545454545455%;" title="42.05%">
+						<span class="index">10.909090909090908%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.909090909090908%;" title="10.91%">
+						<span class="index">42.04545454545455%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 14.772727272727273%;" title="14.77%">
+						<span class="index">14.772727272727273%</span>
+					</td>
+					<td class="concorda" style="width: 24.31818181818182%;" title="24.32%">
+						<span class="index">24.31818181818182%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:7.954545454545454%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>23.</small>
+			mulher que é agredida e continua com o parceiro gosta de apanhar
+		</h2>
+		
+			<table style="margin-left: 344.8275862068965px;">
+				<tr>
+					<td class="discorda" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="concorda" style="width: 51.724137931034484%;" title="51.72%">
+						<span class="index">51.724137931034484%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 326.6621438263229px;">
+				<tr>
+					<td class="discorda" style="width: 25.37313432835821%;" title="25.37%">
+						<span class="index">9.294436906377204%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.294436906377204%;" title="9.29%">
+						<span class="index">25.37313432835821%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.016282225237447%;" title="24.02%">
+						<span class="index">24.016282225237447%</span>
+					</td>
+					<td class="concorda" style="width: 38.26322930800543%;" title="38.26%">
+						<span class="index">38.26322930800543%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.0529172320217097%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 342.0344456404737px;">
+				<tr>
+					<td class="discorda" style="width: 23.519913885898816%;" title="23.52%">
+						<span class="index">8.073196986006458%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.073196986006458%;" title="8.07%">
+						<span class="index">23.519913885898816%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 20.021528525296016%;" title="20.02%">
+						<span class="index">20.021528525296016%</span>
+					</td>
+					<td class="concorda" style="width: 46.178686759956946%;" title="46.18%">
+						<span class="index">46.178686759956946%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.206673842841765%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 359.0909090909091px;">
+				<tr>
+					<td class="discorda" style="width: 21.818181818181817%;" title="21.82%">
+						<span class="index">6.363636363636363%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.363636363636363%;" title="6.36%">
+						<span class="index">21.818181818181817%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 27.27272727272727%;" title="27.27%">
+						<span class="index">27.27272727272727%</span>
+					</td>
+					<td class="concorda" style="width: 41.590909090909086%;" title="41.59%">
+						<span class="index">41.590909090909086%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.9545454545454546%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>24.</small>
+			casamento de homem com homem ou de mulher com mulher deve ser proibido
+		</h2>
+		
+			<table style="margin-left: 224.1379310344828px;">
+				<tr>
+					<td class="discorda" style="width: 55.172413793103445%;" title="55.17%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">55.172413793103445%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="concorda" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:10.344827586206897%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 290.7055630936228px;">
+				<tr>
+					<td class="discorda" style="width: 32.15739484396201%;" title="32.16%">
+						<span class="index">9.701492537313433%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.701492537313433%;" title="9.7%">
+						<span class="index">32.15739484396201%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.161465400271371%;" title="13.16%">
+						<span class="index">13.161465400271371%</span>
+					</td>
+					<td class="concorda" style="width: 39.89145183175034%;" title="39.89%">
+						<span class="index">39.89145183175034%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.088195386702849%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 388.8888888888889px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 33.33333333333333%;" title="33.33%">
+						<span class="index">33.33333333333333%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:22.22222222222222%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 299.78471474703986px;">
+				<tr>
+					<td class="discorda" style="width: 31.485468245425192%;" title="31.49%">
+						<span class="index">8.557588805166846%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 8.557588805166846%;" title="8.56%">
+						<span class="index">31.485468245425192%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 12.540365984930032%;" title="12.54%">
+						<span class="index">12.540365984930032%</span>
+					</td>
+					<td class="concorda" style="width: 38.32077502691066%;" title="38.32%">
+						<span class="index">38.32077502691066%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:9.095801937567277%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 290.9090909090909px;">
+				<tr>
+					<td class="discorda" style="width: 32.72727272727273%;" title="32.73%">
+						<span class="index">9.090909090909092%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 9.090909090909092%;" title="9.09%">
+						<span class="index">32.72727272727273%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.40909090909091%;" title="13.41%">
+						<span class="index">13.40909090909091%</span>
+					</td>
+					<td class="concorda" style="width: 38.18181818181819%;" title="38.18%">
+						<span class="index">38.18181818181819%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.590909090909091%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>25.</small>
+			a mulher que apanha em casa deve ficar quieta para não prejudicar os filhos
+		</h2>
+		
+			<table style="margin-left: 120.68965517241384px;">
+				<tr>
+					<td class="discorda" style="width: 65.51724137931035%;" title="65.52%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">65.51724137931035%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.793103448275861%;" title="13.79%">
+						<span class="index">13.793103448275861%</span>
+					</td>
+					<td class="concorda" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 81.75033921302577px;">
+				<tr>
+					<td class="discorda" style="width: 70.08141112618725%;" title="70.08%">
+						<span class="index">13.568521031207597%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.568521031207597%;" title="13.57%">
+						<span class="index">70.08141112618725%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 8.344640434192673%;" title="8.34%">
+						<span class="index">8.344640434192673%</span>
+					</td>
+					<td class="concorda" style="width: 6.241519674355495%;" title="6.24%">
+						<span class="index">6.241519674355495%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:1.7639077340569878%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 166.66666666666669px;">
+				<tr>
+					<td class="discorda" style="width: 66.66666666666666%;" title="66.67%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">66.66666666666666%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 86.11410118406889px;">
+				<tr>
+					<td class="discorda" style="width: 70.8826695371367%;" title="70.88%">
+						<span class="index">11.894510226049515%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.894510226049515%;" title="11.89%">
+						<span class="index">70.8826695371367%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 7.21205597416577%;" title="7.21%">
+						<span class="index">7.21205597416577%</span>
+					</td>
+					<td class="concorda" style="width: 7.265877287405813%;" title="7.27%">
+						<span class="index">7.265877287405813%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:2.744886975242196%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 126.13636363636368px;">
+				<tr>
+					<td class="discorda" style="width: 64.77272727272727%;" title="64.77%">
+						<span class="index">10.0%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.0%;" title="10.0%">
+						<span class="index">64.77272727272727%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 13.636363636363635%;" title="13.64%">
+						<span class="index">13.636363636363635%</span>
+					</td>
+					<td class="concorda" style="width: 7.727272727272727%;" title="7.73%">
+						<span class="index">7.727272727272727%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.8636363636363638%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>26.</small>
+			a questão da violência contra as mulheres recebe mais importância do que merece
+		</h2>
+		
+			<table style="margin-left: 189.65517241379308px;">
+				<tr>
+					<td class="discorda" style="width: 55.172413793103445%;" title="55.17%">
+						<span class="index">6.896551724137931%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 6.896551724137931%;" title="6.9%">
+						<span class="index">55.172413793103445%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 24.137931034482758%;" title="24.14%">
+						<span class="index">24.137931034482758%</span>
+					</td>
+					<td class="concorda" style="width: 10.344827586206897%;" title="10.34%">
+						<span class="index">10.344827586206897%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.4482758620689653%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 119.40298507462688px;">
+				<tr>
+					<td class="discorda" style="width: 63.02578018995929%;" title="63.03%">
+						<span class="index">13.093622795115332%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 13.093622795115332%;" title="13.09%">
+						<span class="index">63.02578018995929%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.12618724559023%;" title="11.13%">
+						<span class="index">11.12618724559023%</span>
+					</td>
+					<td class="concorda" style="width: 8.819538670284938%;" title="8.82%">
+						<span class="index">8.819538670284938%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:3.934871099050204%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 111.11111111111109px;">
+				<tr>
+					<td class="discorda" style="width: 55.55555555555556%;" title="55.56%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">55.55555555555556%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 0.0%;" title="0.0%">
+						<span class="index">0.0%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 143.16469321851457px;">
+				<tr>
+					<td class="discorda" style="width: 51.829924650161466%;" title="51.83%">
+						<span class="index">19.53713670613563%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 19.53713670613563%;" title="19.54%">
+						<span class="index">51.829924650161466%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 12.594187298170075%;" title="12.59%">
+						<span class="index">12.594187298170075%</span>
+					</td>
+					<td class="concorda" style="width: 11.033369214208827%;" title="11.03%">
+						<span class="index">11.033369214208827%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:5.005382131324004%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 148.86363636363643px;">
+				<tr>
+					<td class="discorda" style="width: 57.49999999999999%;" title="57.5%">
+						<span class="index">12.727272727272727%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 12.727272727272727%;" title="12.73%">
+						<span class="index">57.49999999999999%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 11.136363636363637%;" title="11.14%">
+						<span class="index">11.136363636363637%</span>
+					</td>
+					<td class="concorda" style="width: 13.863636363636363%;" title="13.86%">
+						<span class="index">13.863636363636363%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:4.7727272727272725%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+		<h2>
+			<small>27.</small>
+			tem mulher que é pra casar, tem mulher que é pra cama
+		</h2>
+		
+			<table style="margin-left: 275.8620689655172px;">
+				<tr>
+					<td class="discorda" style="width: 27.586206896551722%;" title="27.59%">
+						<span class="index">17.24137931034483%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 17.24137931034483%;" title="17.24%">
+						<span class="index">27.586206896551722%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 3.4482758620689653%;" title="3.45%">
+						<span class="index">3.4482758620689653%</span>
+					</td>
+					<td class="concorda" style="width: 44.827586206896555%;" title="44.83%">
+						<span class="index">44.827586206896555%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:6.896551724137931%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">amarela</span>
+		
+			<table style="margin-left: 302.91723202170965px;">
+				<tr>
+					<td class="discorda" style="width: 29.37584803256445%;" title="29.38%">
+						<span class="index">10.040705563093622%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 10.040705563093622%;" title="10.04%">
+						<span class="index">29.37584803256445%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 19.87788331071913%;" title="19.88%">
+						<span class="index">19.87788331071913%</span>
+					</td>
+					<td class="concorda" style="width: 31.614654002713706%;" title="31.61%">
+						<span class="index">31.614654002713706%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:9.09090909090909%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">branca</span>
+		
+			<table style="margin-left: 333.33333333333337px;">
+				<tr>
+					<td class="discorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">11.11111111111111%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.11111111111111%;" title="11.11%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 44.44444444444444%;" title="44.44%">
+						<span class="index">44.44444444444444%</span>
+					</td>
+					<td class="concorda" style="width: 22.22222222222222%;" title="22.22%">
+						<span class="index">22.22222222222222%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:0.0%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">indígena</span>
+		
+			<table style="margin-left: 339.8815931108719px;">
+				<tr>
+					<td class="discorda" style="width: 24.65016146393972%;" title="24.65%">
+						<span class="index">7.373519913885899%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 7.373519913885899%;" title="7.37%">
+						<span class="index">24.65016146393972%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 19.483315392895587%;" title="19.48%">
+						<span class="index">19.483315392895587%</span>
+					</td>
+					<td class="concorda" style="width: 37.78256189451022%;" title="37.78%">
+						<span class="index">37.78256189451022%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:10.71044133476857%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">parda</span>
+		
+			<table style="margin-left: 326.1363636363636px;">
+				<tr>
+					<td class="discorda" style="width: 23.636363636363637%;" title="23.64%">
+						<span class="index">11.136363636363637%</span>
+					</td>
+					<td class="discorda-parcial" style="width: 11.136363636363637%;" title="11.14%">
+						<span class="index">23.636363636363637%</span>
+					</td>
+					<td class="concorda-parcial" style="width: 25.681818181818183%;" title="25.68%">
+						<span class="index">25.681818181818183%</span>
+					</td>
+					<td class="concorda" style="width: 30.681818181818183%;" title="30.68%">
+						<span class="index">30.681818181818183%</span>
+					</td>
+					<td class="" style="background-color:transparent;width:8.863636363636363%">
+					</td>
+				</tr>
+			</table>
+			<span class="label">preta</span>
+		
+	
+
+
+</div>
+
+<footer>
+
+	<p>
+	Fonte:
+		<a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140327_sips_violencia_mulheres.pdf">Pesquisa [PDF]</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/index.php?option=com_content&view=article&id=21971&catid=10&Itemid=9">Errata</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140404_sips_base.xls">Microdados [Excel]</a>
+		&#8226; <a href="http://goo.gl/FGAmVY">Microdados [Google Drive]</a>
+		&#8226; <a href="http://www.ipea.gov.br/portal/images/stories/PDFs/SIPS/140404_dicionario_sips.txt">Dicionário de dados</a>
+	</p>
+
+	<p><strong>Compartilhe</strong></p>
+	<!-- AddThis Button BEGIN -->
+	<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+		<a class="addthis_button_twitter"></a>
+		<a class="addthis_button_facebook"></a>
+		<a class="addthis_button_google_plusone_share"></a>
+		<a class="addthis_button_pinterest_share"></a>
+		<a class="addthis_button_email"></a>
+	</div>
+	<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5344e67950e977bf"></script>
+	<!-- AddThis Button END -->
+
+	<p class="license">
+		<a rel="license" class="cc_icons" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_cc.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_by.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_nc.png" width="24px"/>
+			<img src="http://creativecommons.org/wp-content/themes/creativecommons.org/images/chooser_sa.png" width="24px"/>
+		</a>
+		<br/>
+		<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+			Creative Commons Atribuição - Não Comercial - Compartilha Igual
+		</a>
+	</p>
+
+	<p>
+	Créditos: <a href="https://twitter.com/mauricio">Maurício Maia</a> - <a href="http://www.saopaulo.io">São Paulo I/O</a>
+	</p>
+</footer>
+
+</body>
+</html>
